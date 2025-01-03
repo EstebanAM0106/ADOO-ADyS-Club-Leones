@@ -2,46 +2,50 @@ import React, { useEffect, useState } from "react";
 import axios from "../services/api";
 
 const ListaActividades = () => {
-    const [actividades, setActividades] = useState([]);
+    const [eventos, setEventos] = useState([]);
 
     useEffect(() => {
-        const fetchActividades = async () => {
+        const fetchEventos = async () => {
             try {
-                const response = await axios.get("/actividades");
-                setActividades(response.data);
+                const response = await axios.get("/eventos");
+                setEventos(response.data);
             } catch (error) {
-                console.error("Error obteniendo actividades:", error);
+                console.error("Error obteniendo eventos:", error);
             }
         };
 
-        fetchActividades();
+        fetchEventos();
     }, []);
 
-    const eliminarActividad = async (id) => {
+    const eliminarEvento = async (id) => {
         try {
-            await axios.delete(`/actividades/${id}`);
-            setActividades(actividades.filter((actividad) => actividad.id !== id));
-            alert("Actividad eliminada con éxito");
+            await axios.delete(`/eventos/${id}`);
+            setEventos(eventos.filter((evento) => evento.ID_Evento !== id));
+            alert("Evento eliminado con éxito");
         } catch (error) {
-            console.error("Error eliminando actividad:", error);
+            console.error("Error eliminando evento:", error);
         }
     };
 
     return (
-        <div>
-            <h2>Lista de Actividades</h2>
+        <div className="lista-eventos">
+            <h2>Lista de Eventos</h2>
             <ul>
-                {actividades.length > 0 ? (
-                    actividades.map((actividad) => (
-                        <li key={actividad.id}>
-                            <h3>{actividad.nombre}</h3>
-                            <p>{actividad.descripcion}</p>
-                            <p>Fecha: {actividad.fecha}</p>
-                            <button onClick={() => eliminarActividad(actividad.id)}>Eliminar</button>
+                {eventos.length > 0 ? (
+                    eventos.map((evento) => (
+                        <li key={evento.ID_Evento}>
+                            <h3>{evento.Nombre}</h3>
+                            <p>Fecha de Convocatoria: {evento.Fecha_Convocatoria}</p>
+                            <p>Fecha de Inicio: {evento.Fecha_Inicio}</p>
+                            <p>Fecha de Fin: {evento.Fecha_Fin}</p>
+                            <p>Modalidad: {evento.Modalidad}</p>
+                            <p>Costo: {evento.Costo}</p>
+                            <p>Sede: {evento.SedeNombre}</p>
+                            <button onClick={() => eliminarEvento(evento.ID_Evento)}>Eliminar</button>
                         </li>
                     ))
                 ) : (
-                    <p>No hay actividades registradas.</p>
+                    <p>No hay eventos registrados.</p>
                 )}
             </ul>
         </div>

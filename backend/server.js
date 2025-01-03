@@ -3,14 +3,14 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-const actividadesRoutes = require("./routes/actividades");
+const eventosRoutes = require("./routes/eventos");
 
 // Middlewares
 app.use(cors());
 app.use(bodyParser.json());
 
 // Rutas
-app.use("/api", actividadesRoutes);
+app.use("/api", eventosRoutes);
 
 // Servidor
 const PORT = process.env.PORT || 5000;
