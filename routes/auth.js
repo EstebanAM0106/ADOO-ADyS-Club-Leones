@@ -34,7 +34,15 @@ router.post(
         "secret_key",
         { expiresIn: "1h" }
       );
-      res.json({ token });
+
+      res.json({
+        token,
+        user: {
+          email: user.Email,
+          password: user.Password,
+          role: user.Rol,
+        },
+      });
     });
   }
 );
