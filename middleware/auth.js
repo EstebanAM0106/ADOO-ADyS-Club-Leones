@@ -48,11 +48,14 @@ const jwt = require("jsonwebtoken");
  * .then(data => console.log(data)); // { error: "Token no válido" }
  */
 const authenticateToken = (req, res, next) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
-  if (!token) {
+  console.log(req);
+  const authHeader = req.header("Authorization");
+  if (!authHeader) {
+    console.log("Error de Acceso");
     return res.status(401).json({ error: "Acceso denegado" });
   }
 
+  const token = authHeader.replace("Bearer ", "");
   try {
     const verified = jwt.verify(token, "secret_key");
     req.user = verified;
