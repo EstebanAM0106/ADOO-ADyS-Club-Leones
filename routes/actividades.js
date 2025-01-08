@@ -14,6 +14,34 @@ const handleValidationErrors = (req, res, next) => {
 
 // Obtener todas las actividades (excluyendo las eliminadas)
 router.get("/actividades", (req, res) => {
+  /**
+   * Consulta SQL para obtener todas las actividades no eliminadas junto con el nombre del usuario asociado.
+   *
+   * La consulta selecciona todas las columnas de la tabla `actividades` y el nombre del usuario de la tabla `usuarios`.
+   * Las tablas `actividades` y `usuarios` se unen mediante la columna `usuario_id` de `actividades` y la columna `id` de `usuarios`.
+   * Solo se seleccionan las actividades que no están eliminadas (`is_deleted = FALSE`).
+   *
+   * @example
+   * // Ejemplo de resultado de la consulta:
+   * [
+   *   {
+   *     id: 1,
+   *     nombre: 'Actividad 1',
+   *     descripcion: 'Descripción de la actividad 1',
+   *     usuario_id: 2,
+   *     is_deleted: false,
+   *     usuario: 'Nombre del Usuario'
+   *   },
+   *   {
+   *     id: 2,
+   *     nombre: 'Actividad 2',
+   *     descripcion: 'Descripción de la actividad 2',
+   *     usuario_id: 3,
+   *     is_deleted: false,
+   *     usuario: 'Otro Usuario'
+   *   }
+   * ]
+   */
   const query = `
         SELECT actividades.*, usuarios.nombre AS usuario
         FROM actividades

@@ -3,6 +3,14 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
+/**
+ * Importa las rutas de eventos desde el archivo "./routes/eventos".
+ *
+ * @example
+ * const eventosRoutes = require("./routes/eventos");
+ *
+ * @module eventosRoutes
+ */
 const eventosRoutes = require("./routes/eventos");
 const authRoutes = require("./routes/auth"); // Importa las rutas de autenticación
 

@@ -137,6 +137,26 @@ router.put(
   handleValidationErrors,
   (req, res) => {
     const { id } = req.params;
+    /**
+     * Extrae los datos del cuerpo de la solicitud (req.body) para crear o actualizar un evento.
+     *
+     * @typedef {Object} Evento
+     * @property {string} Nombre - Nombre del evento. Ejemplo: "Maratón Anual".
+     * @property {string} Fecha_Convocatoria - Fecha de convocatoria del evento. Ejemplo: "2023-11-01".
+     * @property {string} Fecha_Inicio_Inscripciones - Fecha de inicio de inscripciones. Ejemplo: "2023-11-05".
+     * @property {string} Fecha_Cierre_Inscripciones - Fecha de cierre de inscripciones. Ejemplo: "2023-11-20".
+     * @property {string} Fecha_Inicio - Fecha de inicio del evento. Ejemplo: "2023-12-01".
+     * @property {string} Fecha_Fin - Fecha de finalización del evento. Ejemplo: "2023-12-02".
+     * @property {string} Modalidad - Modalidad del evento. Ejemplo: "Presencial".
+     * @property {number} Costo - Costo de participación en el evento. Ejemplo: 50.
+     * @property {string} Requisitos - Requisitos para participar en el evento. Ejemplo: "Ser mayor de 18 años".
+     * @property {string} Reglas - Reglas del evento. Ejemplo: "No se permite el uso de dispositivos electrónicos".
+     * @property {string} Horarios - Horarios del evento. Ejemplo: "De 8:00 AM a 5:00 PM".
+     * @property {number} ID_Sede - Identificador de la sede donde se realizará el evento. Ejemplo: 1.
+     *
+     * @param {Object} req - Objeto de solicitud HTTP.
+     * @param {Evento} req.body - Cuerpo de la solicitud que contiene los datos del evento.
+     */
     const {
       Nombre,
       Fecha_Convocatoria,

@@ -29,6 +29,28 @@ router.post(
       }
 
       const user = results[0];
+      /**
+       * Genera un token JWT para un usuario autenticado.
+       *
+       * @param {Object} user - Objeto que contiene la información del usuario.
+       * @param {number} user.ID_Usuario - ID del usuario.
+       * @param {string} user.Email - Correo electrónico del usuario.
+       * @param {string} user.Rol - Rol del usuario.
+       * @returns {string} Token JWT generado.
+       *
+       * @example
+       * const user = {
+       *   ID_Usuario: 123,
+       *   Email: "usuario@example.com",
+       *   Rol: "admin"
+       * };
+       * const token = jwt.sign(
+       *   { id: user.ID_Usuario, email: user.Email, role: user.Rol },
+       *   "secret_key",
+       *   { expiresIn: "1h" }
+       * );
+       * console.log(token); // Imprime el token JWT generado
+       */
       const token = jwt.sign(
         { id: user.ID_Usuario, email: user.Email, role: user.Rol },
         "secret_key",

@@ -1,5 +1,52 @@
 const jwt = require("jsonwebtoken");
 
+/**
+ * Middleware para autenticar un token JWT.
+ *
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ * @param {Function} next - Función para pasar al siguiente middleware.
+ *
+ * @example
+ * // Uso en una ruta protegida
+ * const express = require('express');
+ * const app = express();
+ * const authenticateToken = require('./middleware/auth');
+ *
+ * app.get('/ruta-protegida', authenticateToken, (req, res) => {
+ *   res.send('Acceso concedido');
+ * });
+ *
+ * @example
+ * // Solicitud con token válido
+ * fetch('/ruta-protegida', {
+ *   method: 'GET',
+ *   headers: {
+ *     'Authorization': 'Bearer tu_token_valido'
+ *   }
+ * })
+ * .then(response => response.json())
+ * .then(data => console.log(data));
+ *
+ * @example
+ * // Solicitud sin token
+ * fetch('/ruta-protegida', {
+ *   method: 'GET'
+ * })
+ * .then(response => response.json())
+ * .then(data => console.log(data)); // { error: "Acceso denegado" }
+ *
+ * @example
+ * // Solicitud con token inválido
+ * fetch('/ruta-protegida', {
+ *   method: 'GET',
+ *   headers: {
+ *     'Authorization': 'Bearer token_invalido'
+ *   }
+ * })
+ * .then(response => response.json())
+ * .then(data => console.log(data)); // { error: "Token no válido" }
+ */
 const authenticateToken = (req, res, next) => {
   const token = req.header("Authorization").replace("Bearer ", "");
   if (!token) {
