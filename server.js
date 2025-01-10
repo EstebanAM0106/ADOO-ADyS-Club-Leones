@@ -14,6 +14,7 @@ const app = express();
 const eventosRoutes = require("./routes/eventos");
 const authRoutes = require("./routes/auth"); // Importa las rutas de autenticación
 const inscripcionesRoutes = require("./routes/inscripciones"); // Importa las rutas de inscripciones
+const usuariosRoutes = require("./routes/usuarios"); // Importa las rutas de usuarios
 
 // Middlewares
 app.use(cors());
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.use("/api", eventosRoutes);
 app.use("/api", authRoutes); // Usa las rutas de autenticación
 app.use("/api", inscripcionesRoutes); // Usa las rutas de inscripciones
+app.use("/api", usuariosRoutes); // Usa las rutas de usuarios
 
 // Servidor
 const PORT = process.env.PORT || 5000;
