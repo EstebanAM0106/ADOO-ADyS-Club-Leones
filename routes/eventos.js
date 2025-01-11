@@ -110,8 +110,6 @@ router.post(
 // Actualizar un evento existente (solo para administradores)
 router.put(
   "/eventos/:id",
-  // authenticateToken,
-  // authorizeRole(["admin"]),
   [
     param("id").isInt().withMessage("El ID debe ser un número"),
     body("Nombre").notEmpty().withMessage("El nombre es obligatorio"),
