@@ -15,6 +15,8 @@ const eventosRoutes = require("./routes/eventos");
 const authRoutes = require("./routes/auth"); // Importa las rutas de autenticación
 const inscripcionesRoutes = require("./routes/inscripciones"); // Importa las rutas de inscripciones
 const usuariosRoutes = require("./routes/usuarios"); // Importa las rutas de usuarios
+const sedesRoutes = require("./routes/sedes"); // Importa las rutas de sedes
+const registroTiempoRoutes = require("./routes/registroTiempo"); // Importa las rutas de registro de tiempo
 
 // Middlewares
 app.use(cors());
@@ -25,6 +27,8 @@ app.use("/api", eventosRoutes);
 app.use("/api", authRoutes); // Usa las rutas de autenticación
 app.use("/api", inscripcionesRoutes); // Usa las rutas de inscripciones
 app.use("/api", usuariosRoutes); // Usa las rutas de usuarios
+app.use("/api", sedesRoutes); // Usa las rutas de sedes
+app.use("/api", registroTiempoRoutes); // Usa las rutas de registro de tiempo
 
 // Servidor
 const PORT = process.env.PORT || 5000;
