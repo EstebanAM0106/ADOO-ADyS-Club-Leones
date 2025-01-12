@@ -25,7 +25,7 @@ Este proyecto es una API para gestionar eventos, inscripciones, usuarios, sedes 
 2. Instala las dependencias:
 
    ```sh
-   node server.js
+   npm install
    ```
 
 3. Configura la base de datos:
@@ -48,7 +48,7 @@ Este proyecto es una API para gestionar eventos, inscripciones, usuarios, sedes 
 5. Inicia el servidor:
 
    ```sh
-   npm start
+   node server.js
    ```
 
 ## Endpoints
