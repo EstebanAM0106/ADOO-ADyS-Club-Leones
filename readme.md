@@ -53,6 +53,96 @@ Este proyecto es una API para gestionar eventos, inscripciones, usuarios, sedes 
 
 ## Endpoints
 
+### Inscripciones
+
+- **GET /api/inscripciones**
+
+  Obtiene todas las inscripciones.
+
+- **POST /api/inscripciones**
+
+  Registra una nueva inscripción.
+
+  ```json
+  {
+    "ID_Evento": 1,
+    "ID_Usuario": 1
+  }
+  ```
+
+- **DELETE /api/inscripciones/:id**
+
+  Elimina una inscripción.
+
+### Usuarios
+
+- **GET /api/usuarios**
+
+  Obtiene todos los usuarios.
+
+- **POST /api/usuarios**
+
+  Registra un nuevo usuario.
+
+  ```json
+  {
+    "Nombre": "Juan",
+    "Apellido": "Pérez",
+    "Genero": "masculino",
+    "Fecha_Nacimiento": "1990-01-01",
+    "Email": "juan.perez@example.com",
+    "Password": "tu_contraseña",
+    "Rol": "user"
+  }
+  ```
+
+- **DELETE /api/usuarios/:id**
+
+  Elimina un usuario.
+
+### Sedes
+
+- **GET /api/sedes**
+
+  Obtiene todas las sedes.
+
+- **POST /api/sedes**
+
+  Registra una nueva sede.
+
+  ```json
+  {
+    "Nombre": "Nueva Sede",
+    "Ubicacion": "Ubicación de la sede"
+  }
+  ```
+
+- **DELETE /api/sedes/:id**
+
+  Elimina una sede.
+
+### Registro de Tiempo
+
+- **GET /api/registrotiempo**
+
+  Obtiene todos los registros de tiempo.
+
+- **POST /api/registrotiempo**
+
+  Registra un nuevo tiempo.
+
+  ```json
+  {
+    "ID_Evento": 1,
+    "ID_Usuario": 1,
+    "Tiempo": "01:30:00"
+  }
+  ```
+
+- **DELETE /api/registrotiempo/:id**
+
+  Elimina un registro de tiempo.
+
 ### Autenticación
 
 - **POST /api/login**
