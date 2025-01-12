@@ -26,6 +26,33 @@ router.get("/usuarios", (req, res) => {
   });
 });
 
+// Obtener un usuario por ID
+router.get(
+  "/usuarios/:id",
+  [param("id").isInt().withMessage("El ID debe ser un número").toInt()],
+  handleValidationErrors,
+  (req, res) => {
+    const { id } = req.params;
+    const query = "SELECT * FROM Usuarios WHERE ID_Usuario = ?";
+
+    db.query(query, [id], (err, results) => {
+      if (err) {
+        console.error("Error obteniendo usuario:", err.message);
+        return res.status(500).json({
+          error: "Error al obtener usuario",
+          details: err.message,
+        });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({ error: "Usuario no encontrado" });
+      }
+
+      res.json(results[0]);
+    });
+  }
+);
+
 // Registrar un nuevo usuario
 router.post(
   "/usuarios",

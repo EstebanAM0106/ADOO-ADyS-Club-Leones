@@ -31,6 +31,71 @@ router.get("/eventos", (req, res) => {
   });
 });
 
+// Obtener un evento por ID
+router.get(
+  "/eventos/:id",
+  [param("id").isInt().withMessage("El ID debe ser un número").toInt()],
+  handleValidationErrors,
+  (req, res) => {
+    const { id } = req.params;
+    const query = `
+      SELECT Evento.*, Sede.Nombre AS SedeNombre
+      FROM Evento
+      INNER JOIN Sede ON Evento.ID_Sede = Sede.ID_Sede
+      WHERE Evento.ID_Evento = ?
+    `;
+
+    db.query(query, [id], (err, results) => {
+      if (err) {
+        console.error("Error obteniendo evento:", err.message);
+        return res.status(500).json({
+          error: "Error al obtener evento",
+          details: err.message,
+        });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({ error: "Evento no encontrado" });
+      }
+
+      res.json(results[0]);
+    });
+  }
+);
+
+// Obtener usuarios inscritos a un evento
+router.get(
+  "/eventos/:id/usuarios",
+  [
+    param("id")
+      .isInt()
+      .withMessage("El ID del evento debe ser un número")
+      .toInt(),
+  ],
+  handleValidationErrors,
+  (req, res) => {
+    const { id } = req.params;
+    const query = `
+      SELECT Usuarios.*
+      FROM Inscripcion
+      INNER JOIN Usuarios ON Inscripcion.ID_Usuario = Usuarios.ID_Usuario
+      WHERE Inscripcion.ID_Evento = ?
+    `;
+
+    db.query(query, [id], (err, results) => {
+      if (err) {
+        console.error("Error obteniendo usuarios del evento:", err.message);
+        return res.status(500).json({
+          error: "Error al obtener usuarios del evento",
+          details: err.message,
+        });
+      }
+
+      res.json(results);
+    });
+  }
+);
+
 // Registrar un nuevo evento (solo para administradores)
 router.post(
   "/eventos",
@@ -55,6 +120,11 @@ router.post(
     body("Costo")
       .isDecimal()
       .withMessage("El costo debe ser un número decimal"),
+    body("Requisitos")
+      .notEmpty()
+      .withMessage("Los requisitos son obligatorios"),
+    body("Reglas").notEmpty().withMessage("Las reglas son obligatorias"),
+    body("Horarios").notEmpty().withMessage("Los horarios son obligatorios"),
     body("ID_Sede").isInt().withMessage("El ID de la sede debe ser un número"),
   ],
   handleValidationErrors,
@@ -73,8 +143,14 @@ router.post(
       Horarios,
       ID_Sede,
     } = req.body;
-    const query =
-      "INSERT INTO Evento (Nombre, Fecha_Convocatoria, Fecha_Inicio_Inscripciones, Fecha_Cierre_Inscripciones, Fecha_Inicio, Fecha_Fin, Modalidad, Costo, Requisitos, Reglas, Horarios, ID_Sede) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    const query = `
+      INSERT INTO Evento 
+      (Nombre, Fecha_Convocatoria, Fecha_Inicio_Inscripciones, Fecha_Cierre_Inscripciones, 
+       Fecha_Inicio, Fecha_Fin, Modalidad, Costo, Requisitos, Reglas, Horarios, ID_Sede)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
     db.query(
       query,
       [
@@ -94,11 +170,12 @@ router.post(
       (err, results) => {
         if (err) {
           console.error("Error registrando evento:", err.message);
-          return res
-            .status(500)
-            .json({ error: "Error al registrar evento", details: err.message });
+          return res.status(500).json({
+            error: "Error al registrar evento",
+            details: err.message,
+          });
         }
-        res.json({
+        res.status(201).json({
           message: "Evento registrado con éxito",
           id: results.insertId,
         });
@@ -107,11 +184,13 @@ router.post(
   }
 );
 
-// Actualizar un evento existente (solo para administradores)
+// Actualizar un evento (solo para administradores)
 router.put(
   "/eventos/:id",
+  // authenticateToken,
+  // authorizeRole(["admin"]),
   [
-    param("id").isInt().withMessage("El ID debe ser un número"),
+    param("id").isInt().withMessage("El ID debe ser un número").toInt(),
     body("Nombre").notEmpty().withMessage("El nombre es obligatorio"),
     body("Fecha_Convocatoria")
       .isDate()
@@ -130,6 +209,11 @@ router.put(
     body("Costo")
       .isDecimal()
       .withMessage("El costo debe ser un número decimal"),
+    body("Requisitos")
+      .notEmpty()
+      .withMessage("Los requisitos son obligatorios"),
+    body("Reglas").notEmpty().withMessage("Las reglas son obligatorias"),
+    body("Horarios").notEmpty().withMessage("Los horarios son obligatorios"),
     body("ID_Sede").isInt().withMessage("El ID de la sede debe ser un número"),
   ],
   handleValidationErrors,
@@ -192,17 +276,19 @@ router.delete(
   "/eventos/:id",
   // authenticateToken,
   // authorizeRole(["admin"]),
-  [param("id").isInt().withMessage("El ID debe ser un número")],
+  [param("id").isInt().withMessage("El ID debe ser un número").toInt()],
   handleValidationErrors,
   (req, res) => {
     const { id } = req.params;
     const query = "DELETE FROM Evento WHERE ID_Evento = ?";
+
     db.query(query, [id], (err, results) => {
       if (err) {
         console.error("Error eliminando evento:", err.message);
-        return res
-          .status(500)
-          .json({ error: "Error al eliminar el evento", details: err.message });
+        return res.status(500).json({
+          error: "Error al eliminar el evento",
+          details: err.message,
+        });
       }
 
       if (results.affectedRows === 0) {
