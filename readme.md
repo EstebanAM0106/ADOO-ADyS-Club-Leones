@@ -1,25 +1,31 @@
 # Club de Leones API
 
-Este proyecto es una API para gestionar eventos y actividades del Club de Leones. La API permite a los usuarios autenticarse, ver eventos y actividades, y a los administradores registrar, actualizar y eliminar eventos.
+Este proyecto es una API para gestionar eventos, inscripciones, usuarios, sedes y registros de tiempo del Club de Leones. La API permite a los usuarios autenticarse, ver eventos, inscribirse en eventos, gestionar usuarios y sedes, y registrar tiempos asociados a eventos.
 
 ## Requisitos
 
-- Node.js
-- MySQL
+- **Node.js** (v14 o superior)
+- **Express** (v4 o superior)
+- **Sequelize** (v6 o superior)
+- **dotenv** (v8 o superior)
+- **jsonwebtoken** (v8 o superior)
+- **bcryptjs** (v2 o superior)
+- **cors** (v2 o superior)
+- **nodemon** (v2 o superior)
 
 ## Instalación
 
-1. Clona el repositorio:
+1. **Clona el repositorio:**
 
    ```sh
-   git clone https://github.com/tu-usuario/club-de-leones-api.git
-   cd club-de-leones-api
+   git clone https://github.com/EstebanAM0106/ADOO-ADyS-Club-Leones.git
+   cd ADOO-ADyS-Club-Leones
    ```
 
 2. Instala las dependencias:
 
    ```sh
-   npm install
+   node server.js
    ```
 
 3. Configura la base de datos:
