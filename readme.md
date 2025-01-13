@@ -230,23 +230,3 @@ Este proyecto es una API para gestionar eventos, inscripciones, usuarios, sedes 
 - **DELETE /api/actividades/:id**
 
   Elimina una actividad (soft delete).
-
-## Middleware
-
-### Autenticación y Autorización
-
-- **authenticateToken**
-
-  Middleware para autenticar un token JWT.
-
-- **authorizeRole**
-
-  Middleware para autorizar roles específicos.
-
-## Contribuciones
-
-Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request para discutir cualquier cambio que te gustaría hacer.
-
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para obtener más detalles.
